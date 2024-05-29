@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Jersey Colleges Results</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1 class="logo">Matching New Jersey Colleges</h1>
+      </header>
+
+      <div class="main-content">
+        <p class="subheading">
+          Based on your preferences, here are some colleges that match:
+        </p>
+        <ul class="results-list"></ul>
+      </div>
+    </div>
+
+    <script>
+      function calculateMatchPercentage(college, userPreferences) {
+        let totalScore = 0;
+        let totalWeight = 0;
+
+        // Define weights for each criterion (you can adjust these values based on importance)
+        const weights = {
+          size: 0.25,
+          setting: 0.25,
+          type: 0.25,
+          studentFacultyRatio: 0.25,
+        };
+
+        // Calculate score for size criterion
+        if (college.size === userPreferences.size) {
+          totalScore += 1 * weights.size;
+        }
+
+        // Calculate score for setting criterion
+        if (college.setting === userPreferences.setting) {
+          totalScore += 1 * weights.setting;
+        }
+
+        // Calculate score for type criterion
+        if (college.type === userPreferences.type) {
+          totalScore += 1 * weights.type;
+        }
+
+        // Calculate score for student-to-faculty ratio criterion (lower ratio is better)
+        if (userPreferences.studentFacultyRatio === "Low") {
+          if (college.student_faculty_ratio <= 15) {
+            // Example threshold
+            totalScore += 1 * weights.studentFacultyRatio;
+          }
+        } else if (userPreferences.studentFacultyRatio === "Medium") {
+          if (
+            college.student_faculty_ratio > 15 &&
+            college.student_faculty_ratio <= 20
+          ) {
+            // Example threshold
+            totalScore += 1 * weights.studentFacultyRatio;
+          }
+        } else if (userPreferences.studentFacultyRatio === "High") {
+          if (college.student_faculty_ratio > 20) {
+            // Example threshold
+            totalScore += 1 * weights.studentFacultyRatio;
+          }
+        }
+
+        // Calculate total weight (sum of all weights)
+        for (const weight of Object.values(weights)) {
+          totalWeight += weight;
+        }
+
+        // Calculate match percentage
+        const matchPercentage = (totalScore / totalWeight) * 100;
+        return matchPercentage.toFixed(2); // Round to two decimal places
+      }
+
+      window.onload = function () {
+        // Define all colleges
+        var colleges = [
+          {
+            name: "New Jersey Institute of Technology",
+            setting: "Urban",
+            acceptance_rate: "66%",
+            undergraduate_enrollment: 9019,
+            size: "Medium",
+            type: "Public",
+            national_ranking: 86,
+            student_faculty_ratio: 15,
+            graduation_rate_4_year: "48%",
+            sport_teams: 47,
+            fraternities: 17,
+            sororities: 6,
+            median_starting_salary: "$64,152.00",
+            link: "colleges/njit.html",
+          },
+          {
+            name: "Rutgers University - New Brunswick",
+            setting: "City",
+            acceptance_rate: "66%",
+            undergraduate_enrollment: 36344,
+            size: "Large",
+            type: "Public",
+            national_ranking: 40,
+            student_faculty_ratio: 15,
+            graduation_rate_4_year: "70%",
+            sport_teams: 111,
+            median_starting_salary: "$49,190.00",
+          },
+          {
+            name: "Steven Institute of Technology",
+            setting: "City",
+            acceptance_rate: "46%",
+            undergraduate_enrollment: 3998,
+            size: "Small",
+            type: "Private",
+            national_ranking: 76,
+            student_faculty_ratio: 11,
+            graduation_rate_4_year: "65%",
+            sport_teams: 59,
+            fraternities: 13,
+            sororities: 8,
+            median_starting_salary: "$77,960.00",
+          },
+          {
+            name: "Montclair State University",
+            setting: "Suburban",
+            acceptance_rate: "91%",
+            undergraduate_enrollment: 17290,
+            size: "Large",
+            type: "Public",
+            national_ranking: 163,
+            student_faculty_ratio: 17,
+            graduation_rate_4_year: "46%",
+            sport_teams: 52,
+            fraternities: 13,
+            sororities: 20,
+            median_starting_salary: "$36,026.00",
+          },
+          {
+            name: "Rutgers University - Camden",
+            setting: "Urban",
+            acceptance_rate: "77%",
+            undergraduate_enrollment: 4185,
+            size: "Small",
+            type: "Public",
+            national_ranking: 98,
+            student_faculty_ratio: 13,
+            graduation_rate_4_year: "45%",
+            sport_teams: 27,
+            median_starting_salary: "$49,190.00",
+          },
+          {
+            name: "Rutgers University - Newark",
+            setting: "Urban",
+            acceptance_rate: "74%",
+            undergraduate_enrollment: 7411,
+            size: "Medium",
+            type: "Public",
+            national_ranking: 82,
+            student_faculty_ratio: 13,
+            graduation_rate_4_year: "39%",
+            sport_teams: 28,
+            median_starting_salary: "$49,190.00",
+          },
+          {
+            name: "Seton Hall University",
+            setting: "Suburban",
+            acceptance_rate: "75%",
+            undergraduate_enrollment: 6012,
+            size: "Medium",
+            type: "Private",
+            national_ranking: 151,
+            student_faculty_ratio: 14,
+            graduation_rate_4_year: "66%",
+            sport_teams: 40,
+            fraternities: 12,
+            sororities: 13,
+            median_starting_salary: "$48,470.00",
+          },
+          {
+            name: "Princeton University",
+            setting: "Suburban",
+            acceptance_rate: "6%",
+            undergraduate_enrollment: 5604,
+            size: "Medium",
+            type: "Private",
+            national_ranking: 1,
+            student_faculty_ratio: 5,
+            graduation_rate_4_year: "88%",
+            sport_teams: 91,
+            median_starting_salary: "$64,287.00",
+          },
+          {
+            name: "Stockton University",
+            setting: "Suburban",
+            acceptance_rate: "86%",
+            undergraduate_enrollment: 8138,
+            size: "Medium",
+            type: "Public",
+            national_ranking: 159,
+            student_faculty_ratio: 16,
+            graduation_rate_4_year: "62%",
+            sport_teams: 41,
+            fraternities: 18,
+            sororities: 13,
+            median_starting_salary: "$34,341.00",
+          },
+          {
+            name: "The College of New Jersey",
+            setting: "Suburban",
+            acceptance_rate: "64%",
+            undergraduate_enrollment: 7039,
+            size: "Medium",
+            type: "Public",
+            student_faculty_ratio: 13,
+            graduation_rate_4_year: "75%",
+            sport_teams: 69,
+            fraternities: 14,
+            sororities: 14,
+            median_starting_salary: "$49,979.00",
+          },
+          {
+            name: "Rider University",
+            setting: "Suburban",
+            acceptance_rate: "84%",
+            undergraduate_enrollment: 3168,
+            size: "Small",
+            type: "Private",
+            student_faculty_ratio: 11,
+            graduation_rate_4_year: "61%",
+            sport_teams: 79,
+            fraternities: 6,
+            sororities: 9,
+            median_starting_salary: "$42,396.00",
+          },
+          {
+            name: "Rowan University",
+            setting: "Suburban",
+            acceptance_rate: "77%",
+            undergraduate_enrollment: 15364,
+            size: "Large",
+            type: "Public",
+            national_ranking: 163,
+            student_faculty_ratio: 16,
+            graduation_rate_4_year: "49%",
+            sport_teams: 79,
+            fraternities: 25,
+            sororities: 15,
+            median_starting_salary: "$39,206.00",
+          },
+          {
+            name: "Kean University",
+            setting: "Urban",
+            acceptance_rate: "83%",
+            undergraduate_enrollment: 10845,
+            size: "Medium",
+            type: "Public",
+            national_ranking: 320,
+            student_faculty_ratio: 16,
+            graduation_rate_4_year: "31%",
+            sport_teams: 28,
+            fraternities: 14,
+            sororities: 15,
+            median_starting_salary: "$38,899.00",
+          },
+          {
+            name: "New Jersey City University",
+            setting: "Urban",
+            acceptance_rate: "90%",
+            undergraduate_enrollment: 4895,
+            size: "Small",
+            type: "Public",
+            student_faculty_ratio: 15,
+            graduation_rate_4_year: "20%",
+            sport_teams: 24,
+            fraternities: 5,
+            sororities: 6,
+            median_starting_salary: "$41,333.00",
+          },
+          {
+            name: "Drew University",
+            setting: "Suburban",
+            acceptance_rate: "73%",
+            undergraduate_enrollment: 1549,
+            size: "Small",
+            type: "Private",
+            student_faculty_ratio: 12,
+            graduation_rate_4_year: "64%",
+            sport_teams: 42,
+            median_starting_salary: "$31,491.00",
+          },
+          {
+            name: "Monmouth University",
+            setting: "Suburban",
+            acceptance_rate: "91%",
+            undergraduate_enrollment: 3811,
+            size: "Small",
+            type: "Private",
+            student_faculty_ratio: 12,
+            graduation_rate_4_year: "60%",
+            sport_teams: 84,
+            fraternities: 6,
+            sororities: 8,
+            median_starting_salary: "$41,881.00",
+          },
+          {
+            name: "Ramapo College of New Jersey",
+            setting: "Suburban",
+            acceptance_rate: "70%",
+            undergraduate_enrollment: 4932,
+            size: "Small",
+            type: "Public",
+            student_faculty_ratio: 15,
+            graduation_rate_4_year: "60%",
+            sport_teams: 38,
+            fraternities: 6,
+            sororities: 12,
+            median_starting_salary: "$42,752.00",
+          },
+          {
+            name: "Fairleigh Dickinson University",
+            setting: "Suburban",
+            acceptance_rate: "87%",
+            undergraduate_enrollment: 7432,
+            size: "Medium",
+            type: "Private",
+            student_faculty_ratio: 13,
+            graduation_rate_4_year: "38%",
+            sport_teams: 64,
+            fraternities: 7,
+            sororities: 9,
+            median_starting_salary: "$41,191.00",
+          },
+        ];
+
+        // Define match percentages based on location
+        const userPreferences = JSON.parse(
+          sessionStorage.getItem("userPreferences")
+        );
+
+        const matchPercentages = {
+          size: {
+            Small: 80,
+            Medium: 90,
+            Large: 70,
+          },
+          location: {
+            Urban: 85,
+            Suburban: 75,
+            City: 80,
+          },
+          type: {
+            Public: 80,
+            Private: 90,
+          },
+          studentFacultyRatio: {
+            Low: 90,
+            Medium: 80,
+            High: 70,
+          },
+        };
+
+        // Display all colleges and match percentages
+        const resultsList = document.querySelector(".results-list");
+        colleges.forEach((college) => {
+          const matchPercentage = calculateMatchPercentage(
+            college,
+            userPreferences,
+            matchPercentages
+          );
+          const cardHTML = `
+                    <div class="college-card">
+                        <h3 class="college-name">${college.name}</h3>
+                        <p class="match-percentage">Match Percentage: ${matchPercentage}%</p>
+                        <!-- Add more college information here -->
+                    </div>
+                `;
+          resultsList.innerHTML += cardHTML;
+        });
+        const collegeNames = document.querySelectorAll(".college-name");
+        collegeNames.forEach((name, index) => {
+          name.addEventListener("click", () => {
+            window.location.href = colleges[index].link;
+          });
+        });
+      };
+
+      function calculateMatchPercentage(
+        college,
+        userPreferences,
+        matchPercentages
+      ) {
+        let totalMatchPercentage = 0;
+        Object.keys(userPreferences).forEach((pref) => {
+          if (
+            college[pref] &&
+            matchPercentages[pref][college[pref]] &&
+            userPreferences[pref] === college[pref]
+          ) {
+            totalMatchPercentage += matchPercentages[pref][college[pref]];
+          }
+        });
+        // Cap the total match percentage at 100
+        return Math.min(totalMatchPercentage, 100);
+      }
+    </script>
+  </body>
+</html>
