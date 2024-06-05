@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      /* Importing a readable and slightly pixelated font for the video game aesthetic */
+      @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+      /* Global Styles */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Press Start 2P", cursive;
+        background-color: #1a1a1d;
+        color: #fff;
+      }
+
+      #map-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Apply the style for the map container */
+      #map {
+        height: 400px;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        border: 4px solid #e94e77;
+      }
+
+      /* Apply CSS styles to the popup */
+      .leaflet-popup-content-wrapper {
+        background-color: #222; /* Background color matching the header */
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .leaflet-popup-content {
+        margin: 10px;
+      }
+
+      .leaflet-popup-content b {
+        color: #e94e77;
+      }
+
+      .leaflet-popup-tip-container {
+        display: none; /* Hide the default tip arrow */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      var map = L.map("map").setView([40.0583, -74.4057], 8); // Set initial map view to New Jersey
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+      }).addTo(map);
+
+      // Example marker for New Jersey Institute of Technology (NJIT)
+      var njitMarker = L.marker([40.7424, -74.1784]).addTo(map);
+      njitMarker
+        .bindPopup(
+          "<b>New Jersey Institute of Technology</b><br>University in Newark, New Jersey"
+        )
+        .openPopup();
+      var stevensMarker = L.marker([40.7448, -74.0256]).addTo(map);
+      stevensMarker
+        .bindPopup(
+          "<b>Stevens Institute of Technology</b><br>University in Hoboken, New Jersey"
+        )
+        .openPopup();
+      var runbMarker = L.marker([40.5008, -74.4474]).addTo(map);
+      runbMarker
+        .bindPopup(
+          "<b>Rutgers University - New Brunswick</b><br>University in New Brunswick, New Jersey"
+        )
+        .openPopup();
+    </script>
+  </body>
+</html>

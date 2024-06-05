@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Jersey Colleges Quiz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1 class="logo">New Jersey Colleges Quiz</h1>
+      </header>
+
+      <div class="main-content">
+        <p class="subheading">
+          Answer the questions below to find your perfect match:
+        </p>
+        <div id="questions">
+          <div class="question" id="question1">
+            <p>What size of college are you looking for?</p>
+            <button class="quiz-button" onclick="nextQuestion('Small')">
+              Small (Under 5,000 students)
+            </button>
+            <button class="quiz-button" onclick="nextQuestion('Medium')">
+              Medium (5,000 - 15,000 students)
+            </button>
+            <button class="quiz-button" onclick="nextQuestion('Large')">
+              Large (Over 15,000 students)
+            </button>
+          </div>
+          <div class="question" id="question2" style="display: none">
+            <p>Which location do you prefer?</p>
+            <button class="quiz-button" onclick="nextQuestion('Urban')">
+              Urban
+            </button>
+            <button class="quiz-button" onclick="nextQuestion('Suburban')">
+              Suburban
+            </button>
+            <button class="quiz-button" onclick="nextQuestion('City')">
+              City
+            </button>
+          </div>
+          <div class="question" id="question3" style="display: none">
+            <p>What type of college are you interested in?</p>
+            <button class="quiz-button" onclick="nextQuestion('Public')">
+              Public
+            </button>
+            <button class="quiz-button" onclick="nextQuestion('Private')">
+              Private
+            </button>
+          </div>
+          <!-- Add more questions as needed -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentQuestion = 1;
+      const questions = document.querySelectorAll(".question");
+      const userPreferences = {};
+
+      function nextQuestion(answer) {
+        if (currentQuestion <= questions.length) {
+          // Store user's answer in userPreferences
+          if (currentQuestion === 1) {
+            userPreferences.size = answer;
+          } else if (currentQuestion === 2) {
+            userPreferences.location = answer;
+          } else if (currentQuestion === 3) {
+            userPreferences.type = answer;
+          }
+
+          // Hide current question
+          questions[currentQuestion - 1].style.display = "none";
+
+          // Move to the next question
+          currentQuestion++;
+
+          // If there are more questions, display the next one
+          if (currentQuestion <= questions.length) {
+            questions[currentQuestion - 1].style.display = "block";
+          } else {
+            // Process final answer and navigate to results page
+            sessionStorage.setItem(
+              "userPreferences",
+              JSON.stringify(userPreferences)
+            );
+            window.location.href = "results.html";
+          }
+        }
+      }
+
+      function selectSize(size) {
+        sessionStorage.setItem("size", size);
+        window.location.href = "results.html";
+      }
+
+      function selectLocation(location) {
+        sessionStorage.setItem("location", location);
+        window.location.href = "results.html";
+      }
+
+      function selectType(type) {
+        sessionStorage.setItem("type", type);
+        window.location.href = "results.html";
+      }
+    </script>
+  </body>
+</html>

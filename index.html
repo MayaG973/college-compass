@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Jersey Colleges</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo-placeholder">
+            <img
+              src="img/logo-search-grid-1x-removebg-preview.png"
+              alt="College Campus Logo"
+              height="80px"
+            />
+          </div>
+          <h1 class="logo">College Campus</h1>
+          <nav>
+            <ul class="nav-list">
+              <li><a href="#" class="nav-link">Home</a></li>
+              <li><a href="map.html" class="nav-link">Map</a></li>
+              <li><a href="#about" class="nav-link">About</a></li>
+              <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="heading">Discover Your Future</div>
+          <div class="subheading">Explore colleges in New Jersey</div>
+          <form id="search-form" action="results.html" method="get">
+            <div class="search-container">
+              <input
+                type="text"
+                id="search-input"
+                class="search-input"
+                name="query"
+                placeholder="Search for colleges..."
+              />
+              <button type="submit" class="search-button">Search</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="quiz">
+          <h2>Find Your Perfect College with Our Quiz</h2>
+          <p>
+            Answer a few questions to match with colleges that fit your
+            preferences:
+          </p>
+          <a href="quiz.html" class="quiz-button">Take the Quiz</a>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+          <h2>About Us</h2>
+          <p>
+            Welcome to New Jersey Colleges, your guide to finding the best
+            colleges and universities in the Garden State. Whether you're
+            dreaming big or exploring your options, we're here to help you
+            navigate the exciting world of higher education.
+          </p>
+          <p>
+            Our platform is designed to make your college search fun, easy, and
+            personalized. Get ready to embark on an adventure and discover the
+            perfect college for you!
+          </p>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>&copy; College Compass. All rights reserved.</p>
+      </footer>
+      <script>
+        document
+          .getElementById("search-form")
+          .addEventListener("submit", function (event) {
+            const searchQuery = document
+              .getElementById("search-input")
+              .value.trim();
+            sessionStorage.setItem("searchQuery", searchQuery);
+          });
+      </script>
+    </div>
+  </body>
+</html>
